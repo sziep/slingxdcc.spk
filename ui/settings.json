@@ -1,0 +1,70 @@
+{
+  "logger": {
+    "packRegex": "#(\\d+)\\s+(\\d+)x\\s+\\[\\s*[><]?([0-9\\.]+)([TGMKtgmk]?)\\]\\s+(.*)",
+    "packdb": "/var/services/homes/sling/.slingxdcc/packets.db",
+    "autocleandb": true,
+    "cleandb_Xminutes": 60,
+    "redundantPercentage": 25,
+    "removePacketsOlder_Xhours": false,
+    "servers": {
+      "abjects": {
+        "host": "irc.abjects.net",
+        "port": 6667,
+        "nick": "@nickname@",
+        "channels": [
+          "#moviegods",
+          "#beast-xdcc",
+          "#[RM]Rolys-Movies"
+        ],
+        "observchannels": []
+      },
+      "criten": {
+        "host": "irc.criten.net",
+        "port": 6667,
+        "nick": "@nickname@",
+        "channels": [
+          "#ELITEWAREZ"
+        ],
+        "observchannels": []
+      },
+      "scenep2p": {
+        "host": "irc.scenep2p.net",
+        "port": 6667,
+        "nick": "@nickname@",
+        "channels": [
+          "#THE.SOURCE"
+        ],
+        "observchannels": []
+      },
+      "rizon": {
+        "host": "irc.rizon.net",
+        "port": 6667,
+        "nick": "@nickname@",
+        "channels": [
+          "#elitewarez",
+          "#1WAREZ"
+        ],
+        "observchannels": []
+      }
+    }
+  },
+  "downloadHandler": {
+    "destination": "@download@",
+    "resumeDownloads": true,
+    "refreshInterval": 1
+  },
+  "webserver": {
+    "port": 3000,
+    "ssl": true,
+    "ssl.crt": "/var/services/homes/sling/.slingxdcc/ssl/server.crt",
+    "ssl.key": "/var/services/homes/sling/.slingxdcc/ssl/server.key"
+  },
+  "packetList": {
+    "sortBy": "filename",
+    "sortOrder": "desc",
+    "filterDiscon": true,
+    "pageItemLimit": 20
+  },
+  "downloads": {
+  }
+}

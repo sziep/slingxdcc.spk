@@ -1,0 +1,20 @@
+[{
+    "step_title": "Basic configuration",
+    "items": [{
+        "type": "textfield",
+        "desc": "",
+        "subitems": [{
+            "key": "WIZARD_USERNAME",
+            "desc": "Nickname",
+            "defaultValue": "nick"
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "",
+        "subitems": [{
+            "key": "WIZARD_DOWNLOAD",
+            "desc": "Download Directory",
+            "defaultValue": "/volume1/download"
+        }]
+    }]
+}]

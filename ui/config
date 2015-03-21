@@ -1,0 +1,12 @@
+{
+  ".url": {
+    "SYNO.SDS.SLINGXDCC": {
+      "title": "SlingXDCC",
+      "desc": "SlingXDCC is an XDCC download manager completely written in javascript.",
+      "icon": "icon_{0}.png",
+      "type": "url",
+      "url": "3rdparty/SlingXDCC/sling.cgi",
+      "allUsers": true
+    }
+  }
+}

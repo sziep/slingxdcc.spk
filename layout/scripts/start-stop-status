@@ -1,0 +1,60 @@
+#!/bin/sh
+
+USER=sling
+HOME=/var/services/homes/${USER}
+INSTALL_DIR=${HOME}/slingxdcc
+
+APP_DIR=$INSTALL_DIR
+export HOME=$HOME
+export FOREVER_HOME=$HOME
+
+StartDaemon() {
+  cd $HOME
+  [ -f ".forever/forever.log" ] && rm .forever/forever.log
+  [ -f "slingxdcc_out.log" ] && rm slingxdcc_out.log
+  [ -f "slingxdcc_err.log" ] && rm slingxdcc_err.log
+  su -c "forever start -o slingxdcc_out.log -e slingxdcc_err.log -l forever.log slingxdcc/server.js" -s /bin/sh $USER
+}
+
+StopDaemon() {
+  cd $HOME
+  su -c "forever stop slingxdcc/server.js" -s /bin/sh $USER
+}
+
+Status() {
+  cd $HOME
+  su -c "forever list | grep server.js" -s /bin/sh $USER
+  if [ 0 -eq $? ]; then
+    echo "Running"
+    exit 0
+  else
+    echo "Stopped"
+    exit 3
+  fi
+}
+
+case "$1" in
+  start)
+    StartDaemon
+    ;;
+  stop)
+    StopDaemon
+    ;;
+  restart)
+    StopDaemons
+    sleep 1
+    StartDaemons
+    ;;
+  status)
+    Status
+    ;;
+  log)
+    echo "$HOME/.forever/forever.log"
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}" >&2
+    exit 1
+    ;;
+esac
+exit 0
+

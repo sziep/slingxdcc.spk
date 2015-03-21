@@ -1,0 +1,9 @@
+#!/bin/sh
+
+USER=sling
+INSTALL_DIR=/var/services/homes/${USER}/slingxdcc
+
+
+rm -rf $INSTALL_DIR
+
+exit 0

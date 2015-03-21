@@ -1,0 +1,62 @@
+---
+- hosts: local
+  gather_facts: no
+
+  tasks:
+    - name: download slingxdcc from git
+      git: repo=https://github.com/DaVarga/slingxdcc.git dest=source
+
+    - name: npm install
+      shell: chdir=source npm install creates=node_modules
+
+    - name: package exists
+      stat: path=build/package.tgz
+      register: pk
+
+    - name: clean spk
+      shell: rm build/package.tgz
+      when: pk.stat.exists
+
+    - name: clean staging
+      shell: rm -rf staging && mkdir staging
+
+    - name: copy source to staging
+      synchronize: src=source/ dest=staging
+
+    - name: copy ui to staging
+      synchronize: src=ui dest=staging
+
+    - name: create package
+      shell: chdir=staging tar -czf ../build/package.tgz *
+
+    - name: clean staging
+      shell: rm -rf staging && mkdir staging
+
+    - name: copy layout to staging
+      synchronize: src=layout/ dest=staging
+
+    - name: copy small icons to staging
+      synchronize: src=ui/icon_{{ item.size }}.png dest=staging/PACKAGE_ICON{{ item.name }}.PNG
+      with_items:
+        - {size: 72, name: ""}
+        - {size: 120, name: "_120"}
+
+    - name: copy package to staging
+      synchronize: src=build/package.tgz dest=staging
+
+    - name: spk exists
+      stat: path=build/slingxdcc.spk
+      register: st
+
+    - name: clean spk
+      shell: rm build/slingxdcc.spk
+      when: st.stat.exists
+
+    - name: create spk
+      shell: chdir=staging tar -cvf ../build/slingxdcc.spk *
+
+    - name: clean up
+      shell: rm -rf {{ item }}
+      with_items:
+        - staging
+        - build/package.tgz

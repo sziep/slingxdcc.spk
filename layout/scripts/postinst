@@ -1,0 +1,24 @@
+#!/bin/sh
+
+USER=sling
+HOME=/var/services/homes/${USER}
+INSTALL_DIR=${HOME}/slingxdcc
+CONFIG_DIR=${HOME}/.slingxdcc/config
+
+synouser --add ${USER} ${USER} "SlingXDCC" 0 ${USER}@localhost 0
+
+ln -s ${SYNOPKG_PKGDEST} ${INSTALL_DIR}
+
+mkdir -p ${CONFIG_DIR}
+mkdir -p ${HOME}/.forever
+
+# Link
+cp ${SYNOPKG_PKGDEST}/ui/settings.json $CONFIG_DIR
+
+sed -i -e "s/@nickname@/${WIZARD_USERNAME}/g" ${CONFIG_DIR}/settings.json
+sed -i -e "s#@download@#${WIZARD_DOWNLOAD}#g" ${CONFIG_DIR}/settings.json
+
+chown -R ${USER}:users ${SYNOPKG_PKGDEST}
+chown -R ${USER}:users ${HOME}
+
+exit 0
