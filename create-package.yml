@@ -3,8 +3,13 @@
   gather_facts: no
 
   tasks:
+    - name: source exists
+      stat: path=source
+      register: src
+
     - name: download slingxdcc from git
       git: repo=https://github.com/DaVarga/slingxdcc.git dest=source
+      when: not src.stat.exists
 
     - name: npm install
       shell: chdir=source npm install creates=node_modules
